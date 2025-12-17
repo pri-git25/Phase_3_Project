@@ -102,5 +102,5 @@ This project demonstrates that customer churn at SyriaTel can be effectively pre
 - Future improvements could involve advanced imbalance-handling techniques, time-series analysis, or richer customer behavior features to enhance predictive accuracy and business impact.
 
 ---
-For more detailed analysis, pleaase check the notebook ,[Jupyter Notebook]
+For more detailed analysis, pleaase check the notebook ,[Jupyter Notebook](index.ipynb)
 
