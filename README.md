@@ -1,58 +1,106 @@
-# Phase_3_Project
 # SyriaTel Customer Churn Prediction
 
 ## Overview
+SyriaTel, a leading telecommunications company, faces a significant business challenge: customer churn. Churn occurs when customers discontinue their service, leading to lost revenue, reduced profitability, and slower growth. This project addresses this issue by developing a **predictive machine learning model** to identify customers at risk of leaving. 
 
-Customer churn poses a significant financial risk to telecommunications companies. This project applies classification modeling techniques to predict whether a SyriaTel customer is likely to churn (stop doing business with the company). By identifying high-risk customers early, SyriaTel can take proactive retention measures and reduce revenue loss.
+By forecasting churn, SyriaTel can implement proactive retention strategies such as targeted promotions, personalized engagement, or service improvements, ultimately safeguarding revenue and improving customer satisfaction.
+
+---
 
 ## Business and Data Understanding
+**Stakeholder Audience:**  
+The primary stakeholders are SyriaTel’s business managers, marketing teams, and customer retention teams. Their goal is to reduce churn and allocate retention resources efficiently.
 
-**Stakeholder:** SyriaTel Management and Customer Retention Teams
-**Business Problem:** Customer attrition directly impacts profitability. The objective is to build a predictive model that identifies customers likely to churn so that targeted retention strategies can be deployed.
+**Business Problem:**  
+Customer churn is costly, and identifying at-risk customers early allows SyriaTel to act before revenue is lost. Retention campaigns must be precise due to limited budgets, and not all dissatisfied customers will actually churn.
 
-**Dataset:** The SyriaTel Customer Churn dataset contains customer demographics, usage patterns, service plans, and a binary churn indicator. The target variable is `churn`, where 1 indicates churn and 0 indicates retention.
+**Dataset:**  
+The dataset `bigml_59c28831336c6604c800002a.csv` – contains customer-level information including usage patterns, service plans, account details, and a target variable indicating whether a customer has churned. It includes both numerical and categorical features relevant to customer behavior and service engagement.
 
-**Key Challenges:**
+Key insights from initial data exploration include:
+- Presence of class imbalance in the target variable (fewer churned customers than non-churned).  
+- Several categorical features requiring encoding for model compatibility.  
+- Variability in numerical features that benefits from scaling for consistent modeling.  
 
-* Class imbalance between churned and non-churned customers
-* Presence of categorical variables requiring encoding
-* Ensuring model interpretability for business stakeholders
+**Churn Distribution:**  
+![Churn Distribution](images/churn_distribution.png)
+
+---
 
 ## Modeling
+To address the churn problem effectively, an **iterative modeling approach** was employed:
 
-An iterative modeling approach was adopted:
+1. **Baseline Model: Logistic Regression**  
+   - Provides a transparent and interpretable benchmark.
+   - Offers insight into which customer features most influence churn.
 
-1. **Baseline Model – Logistic Regression**
-   A simple and interpretable model was built to establish a performance benchmark. Feature scaling and encoding were applied, and recall was emphasized due to the business cost of missing churned customers.
+2. **Decision Tree Classifier**  
+   - Captures non-linear relationships between features and churn.
+   - Provides an intuitive, visual representation of decision paths for stakeholder understanding.
 
-2. **Tuned Model – Decision Tree Classifier**
-   A decision tree with tuned hyperparameters was implemented to capture non-linear relationships and improve predictive performance while maintaining interpretability.
+3. **Tuned Logistic Regression**  
+   - Optimized hyperparameters improve predictive performance while retaining interpretability.
+   - Selected as the **final model** for practical deployment due to its balance of precision, recall, and business impact.
 
-Both models were evaluated using the same train-test split to ensure fair comparison.
+**Feature Preparation and Processing:**  
+- Categorical features were encoded using label encoding (binary) or one-hot encoding (multi-class).  
+- Numerical features were standardized to ensure consistent scale for modeling.  
+- The dataset was split into training (80%) and testing (20%) sets, maintaining class distribution.
+
+**Decision Tree Feature Importance:**  
+![Feature Importance - Decision Tree](images/feature_importance_dt.png)
+
+**Decision Tree Visualization:**  
+![Decision Tree](images/decision_tree_visualization.png)
+
+---
 
 ## Evaluation
+Model performance was evaluated using **multiple classification metrics**, chosen based on the business context of minimizing missed churn cases:
 
-Models were assessed using multiple classification metrics:
+| Metric | Purpose |
+|--------|---------|
+| Accuracy | Overall correctness of predictions |
+| Precision | Correctness of predicted churn (avoiding false alarms) |
+| Recall | Ability to identify actual churners (critical for retention) |
+| F1-Score | Balance between precision and recall |
+| ROC-AUC | Discrimination between churned and non-churned customers |
 
-* Accuracy
-* Precision
-* Recall (primary metric)
-* F1-score
-* ROC-AUC
+**Baseline Logistic Regression Confusion Matrix:**  
+![Baseline Confusion Matrix](images/confusion_matrix_baseline.png)
 
-The tuned decision tree outperformed the baseline model, achieving higher recall and better overall balance between identifying churners and minimizing false positives.
+**Tuned Logistic Regression Confusion Matrix:**  
+![Tuned Confusion Matrix](images/confusion_matrix_tuned.png)
 
-## Conclusion and Limitations
+**Model Performance Comparison:**  
+![Model Performance Comparison](images/model_performance_comparison.png)
 
-**Conclusion:**
-The final model demonstrates that customer churn can be reasonably predicted using historical usage and service-related features. The decision tree model is recommended due to its improved recall and transparent decision logic.
+**ROC Curve Comparison:**  
+![ROC Curve Comparison](images/roc_curve_comparison.png)
 
-**Limitations:**
+**Key Findings:**  
+- **Tuned Logistic Regression** achieved the highest F1-score and ROC-AUC, making it the most effective model for detecting at-risk customers.  
+- Decision Tree provided intuitive insights into top features influencing churn, such as account tenure, usage patterns, and service type.  
+- Confusion matrices highlighted both correctly identified churners and false alarms, informing potential retention campaign targeting.
 
-* The model relies solely on historical data and may not capture sudden behavioral changes
-* External factors such as competitor promotions are not included
-* Performance may degrade over time without retraining
+**Business Impact Analysis:**  
+- The model can correctly identify a substantial portion of churners, allowing focused retention strategies.  
+- Financial estimates suggest **significant potential savings** from prevented churn when retention efforts are applied effectively, with positive ROI projections.
 
-## Final Recommendation
+---
 
-SyriaTel should deploy the tuned decision tree model as an early-warning system for churn risk. High-risk customers identified by the model should be prioritized for retention campaigns such as personalized offers or service interventions. Regular model retraining and enrichment with additional customer data are advised to sustain performance.
+## Conclusion
+This project demonstrates that customer churn at SyriaTel can be effectively predicted using a structured, interpretable machine learning workflow. Key conclusions include:
+
+- A combination of **baseline models, interpretable decision trees, and tuned logistic regression** provides both predictive power and actionable insights.  
+- Feature importance analysis enables stakeholders to understand which customer attributes most influence churn.  
+- Predictive modeling supports proactive retention campaigns, maximizing revenue protection and operational efficiency.  
+
+**Limitations and Future Work:**  
+- Current analysis relies on static historical data and does not incorporate temporal trends or customer interaction logs.  
+- External factors such as market conditions and competitor activity were not included.  
+- Future improvements could involve advanced imbalance-handling techniques, time-series analysis, or richer customer behavior features to enhance predictive accuracy and business impact.
+
+---
+For more detailed analysis, pleaase check the notebook ,[Jupyter Notebook]
+
